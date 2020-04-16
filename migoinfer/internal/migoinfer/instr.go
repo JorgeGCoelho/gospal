@@ -1,9 +1,6 @@
 package migoinfer
 
 import (
-	"go/token"
-	"go/types"
-
 	"github.com/fatih/color"
 	"github.com/nickng/gospal/callctx"
 	"github.com/nickng/gospal/fn"
@@ -11,10 +8,14 @@ import (
 	"github.com/nickng/gospal/store"
 	"github.com/nickng/gospal/store/chans"
 	"github.com/nickng/gospal/store/mems"
+	"github.com/nickng/gospal/store/muts"
 	"github.com/nickng/gospal/store/structs"
 	"github.com/nickng/migo/v3"
 	"github.com/pkg/errors"
+	"go/token"
+	"go/types"
 	"golang.org/x/tools/go/ssa"
+	"strings"
 )
 
 // Instruction is a visitor for related instructions within a block.
@@ -192,10 +193,14 @@ func (v *Instruction) VisitAlloc(instr *ssa.Alloc) {
 			updater.PutUniq(instr, structs.New(v.Callee, instr))
 		}
 		if typeIsMutex(instr.Type()) {
-			v.MiGo.AddStmts(migoNewMutex(v.Get(instr)))
+			newmut := v.newMut(instr)
+			v.Export(newmut)
+			v.MiGo.AddStmts(migoNewMutex(newmut))
 		}
 		if typeIsRWMutex(instr.Type()) {
-			v.MiGo.AddStmts(migoNewRWMutex(v.Get(instr)))
+			newmut := v.newMut(instr)
+			v.Export(newmut)
+			v.MiGo.AddStmts(migoNewRWMutex(newmut))
 		}
 	case *types.Basic:
 		// Note: this only handles non-struct (flat) types.
@@ -408,8 +413,9 @@ func (v *Instruction) VisitStore(instr *ssa.Store) {
 		} else {
 			// normal store
 			// keep instr.Addr pointing to originally declared Mem.
-			mem := v.Get(instr.Addr)
-			v.MiGo.AddStmts(migoWrite(mem))
+			if strings.Contains(v.Get(instr.Addr).UniqName(), "mem") {
+				v.MiGo.AddStmts(migoWrite(v, instr.Addr))
+			}
 		}
 	} else {
 		v.Fatalf("Store: %s is not defined", instr.Val.Name())
@@ -426,8 +432,9 @@ func (v *Instruction) VisitUnOp(instr *ssa.UnOp) {
 		v.MiGo.AddStmts(migoRecv(v, instr.X, v.Get(instr.X)))
 	case token.MUL:
 		if isPtrBasic(instr.X) {
-			mem := v.Get(instr.X)
-			v.MiGo.AddStmts(migoRead(mem))
+			if strings.Contains(v.Get(instr.X).UniqName(),"mem") {
+				v.MiGo.AddStmts(migoRead(v, instr.X))
+			}
 		} else {
 			if _, err := callctx.Deref(v.Context, instr.X, instr); err != nil {
 				v.Env.Errors <- errors.WithStack(err) // internal error.
@@ -530,21 +537,21 @@ func (v *Instruction) doCall(c *ssa.Call, def *funcs.Definition) {
 		switch {
 		case typeIsRWMutex(def.Param(0).Type()):
 			if call.Function().Name() == "RLock" {
-				v.MiGo.AddStmts(migoRLock(v.Get(call.Args[0])))
+				v.MiGo.AddStmts(migoRLock(call.Args[0]))
 				return
 			}
 			if call.Function().Name() == "RUnlock" {
-				v.MiGo.AddStmts(migoRUnlock(v.Get(call.Args[0])))
+				v.MiGo.AddStmts(migoRUnlock(call.Args[0]))
 				return
 			}
 			fallthrough
 		case typeIsMutex(def.Param(0).Type()):
 			if call.Function().Name() == "Lock" {
-				v.MiGo.AddStmts(migoLock(v.Get(call.Args[0])))
+				v.MiGo.AddStmts(migoLock(call.Args[0]))
 				return
 			}
 			if call.Function().Name() == "Unlock" {
-				v.MiGo.AddStmts(migoUnlock(v.Get(call.Args[0])))
+				v.MiGo.AddStmts(migoUnlock(call.Args[0]))
 				return
 			}
 		}
@@ -670,6 +677,17 @@ func (v *Instruction) newMem(val ssa.Value) *mems.Mem {
 		v.Fatal("Cannot update context")
 	}
 	return newmem
+}
+
+// newMut creates a new Mut.
+func (v *Instruction) newMut(val ssa.Value) *muts.Mut {
+	newmut := muts.New(v.Callee, val)
+	if u, ok := v.Context.(callctx.Updater); ok {
+		u.PutUniq(val, newmut)
+	} else {
+		v.Fatal("Cannot update context")
+	}
+	return newmut
 }
 
 const (
@@ -838,6 +856,9 @@ func (v *Instruction) bindCallParameters(call *funcs.Call, fn *Function) {
 			}
 		}
 		if isPtrBasic(arg) {
+			v.Export(arg)
+		}
+		if typeIsRWMutex(arg.Type()) || typeIsMutex(arg.Type()) {
 			v.Export(arg)
 		}
 	}

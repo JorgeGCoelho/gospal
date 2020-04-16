@@ -3,40 +3,47 @@ package migoinfer
 import (
 	"github.com/nickng/gospal/store"
 	"github.com/nickng/migo/v3"
+	"strings"
 )
 
-func migoNewMem(mem store.Value) migo.Statement {
-	return &migo.NewMem{Name: mem.UniqName()}
+func migoNewMem(mem migo.NamedVar) migo.Statement {
+	return &migo.NewMem{Name: mem}
 }
 
-func migoRead(mem store.Value) migo.Statement {
-	return &migo.MemRead{Name: mem.UniqName()}
+func migoRead(v *Instruction, local store.Key) migo.Statement {
+	if !strings.Contains(v.Get(local).UniqName(), "mem") { // If not a local memory field.
+		return &migo.TauStatement{} //&migo.MemWrite{Name: v.Get(local).UniqName()}
+	}
+	return &migo.MemRead{Name: local.Name()}
 }
 
-func migoWrite(mem store.Value) migo.Statement {
-	return &migo.MemWrite{Name: mem.UniqName()}
+func migoWrite(v *Instruction, local store.Key) migo.Statement {
+	if !strings.Contains(v.Get(local).UniqName(), "mem") { // If not a local memory field.
+		return &migo.TauStatement{} //&migo.MemWrite{Name: v.Get(local).UniqName()}
+	}
+	return &migo.MemWrite{Name: local.Name()}
 }
 
-func migoNewMutex(mu store.Value) migo.Statement {
-	return &migo.NewSyncMutex{Name: mu.UniqName()}
+func migoNewMutex(mu migo.NamedVar) migo.Statement {
+	return &migo.NewSyncMutex{Name: mu}
 }
 
-func migoLock(mu store.Value) migo.Statement {
-	return &migo.SyncMutexLock{Name: mu.UniqName()}
+func migoLock(mu store.Key) migo.Statement {
+	return &migo.SyncMutexLock{Name: mu.Name()}
 }
 
-func migoUnlock(mu store.Value) migo.Statement {
-	return &migo.SyncMutexUnlock{Name: mu.UniqName()}
+func migoUnlock(mu store.Key) migo.Statement {
+	return &migo.SyncMutexUnlock{Name: mu.Name()}
 }
 
-func migoNewRWMutex(mu store.Value) migo.Statement {
-	return &migo.NewSyncRWMutex{Name: mu.UniqName()}
+func migoNewRWMutex(mu migo.NamedVar) migo.Statement {
+	return &migo.NewSyncRWMutex{Name: mu}
 }
 
-func migoRLock(mu store.Value) migo.Statement {
-	return &migo.SyncRWMutexRLock{Name: mu.UniqName()}
+func migoRLock(mu store.Key) migo.Statement {
+	return &migo.SyncRWMutexRLock{Name: mu.Name()}
 }
 
-func migoRUnlock(mu store.Value) migo.Statement {
-	return &migo.SyncRWMutexRUnlock{Name: mu.UniqName()}
+func migoRUnlock(mu store.Key) migo.Statement {
+	return &migo.SyncRWMutexRUnlock{Name: mu.Name()}
 }

@@ -341,6 +341,9 @@ func paramsToMigoParam(v *Instruction, fn *Function, call *funcs.Call) []*migo.P
 		if isPtrBasic(arg) {
 			migoParams = append(migoParams, convertToMigoParam(arg, call.Definition().Param(i)))
 		}
+		if typeIsMutex(arg.Type()) || typeIsRWMutex(arg.Type()) {
+			migoParams = append(migoParams, convertToMigoParam(arg, call.Definition().Param(i)))
+		}
 	}
 	// Convert return value.
 	for i, param := range call.Parameters[call.NParam()+call.NBind():] {

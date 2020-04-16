@@ -5,6 +5,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"strings"
 
 	"github.com/nickng/gospal/callctx"
 	"github.com/nickng/gospal/funcs"
@@ -108,7 +109,10 @@ func (i *Inferer) Analyse() {
 			}
 		}
 		for _, f := range i.Env.Prog.Funcs {
-			if f.SimpleName() != "main.main" {
+			if f.SimpleName() != "main.main" && !strings.HasPrefix(f.SimpleName(), "os") &&
+				!strings.HasPrefix(f.SimpleName(), "syscall") &&
+				!strings.HasPrefix(f.SimpleName(), "internal_poll") &&
+				!strings.HasPrefix(f.SimpleName(), "sync.o") {
 				fmt.Fprintf(i.outWriter, f.String())
 			}
 		}

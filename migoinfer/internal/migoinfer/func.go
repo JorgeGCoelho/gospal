@@ -102,6 +102,9 @@ func (f *Function) exportParams() {
 					}
 				}
 			}
+			if typeIsRWMutex(param.Type()) || typeIsMutex(param.Type()) {
+				f.Export(param)
+			}
 		} else if isPtrBasic(param) {
 			f.Export(param)
 		}

@@ -27,3 +27,7 @@ func New(callsite store.Value, val ssa.Value) *Mem {
 func (m *Mem) UniqName() string {
 	return fmt.Sprintf("%s.%s_mem.%v", m.namespace.UniqName(), m.Value.Name(), m.Pos())
 }
+
+func (m *Mem) Name() string {
+	return fmt.Sprintf(m.Value.Name())
+}
