@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/fatih/color"
-	"github.com/nickng/gospal/migoinfer/internal/migoinfer"
+	"github.com/jujuyuki/gospal/v2/migoinfer/internal/migoinfer"
 	"go.uber.org/zap"
 )
 

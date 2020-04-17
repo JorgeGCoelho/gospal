@@ -2,8 +2,8 @@ package migoinfer
 
 import (
 	"github.com/fatih/color"
-	"github.com/nickng/gospal/callctx"
-	"github.com/nickng/gospal/funcs"
+	"github.com/jujuyuki/gospal/v2/callctx"
+	"github.com/jujuyuki/gospal/v2/funcs"
 	"golang.org/x/tools/go/ssa"
 )
 

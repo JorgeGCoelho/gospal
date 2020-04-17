@@ -1,8 +1,8 @@
 package migoinfer
 
 import (
-	"github.com/nickng/gospal/store"
-	"github.com/nickng/migo/v3"
+	"github.com/jujuyuki/gospal/v2/store"
+	"github.com/jujuyuki/migo/v3"
 	"strings"
 )
 

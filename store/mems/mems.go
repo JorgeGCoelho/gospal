@@ -4,7 +4,7 @@ package mems
 import (
 	"fmt"
 
-	"github.com/nickng/gospal/store"
+	"github.com/jujuyuki/gospal/v2/store"
 	"golang.org/x/tools/go/ssa"
 )
 

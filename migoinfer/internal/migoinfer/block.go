@@ -5,11 +5,11 @@ import (
 	"go/token"
 
 	"github.com/fatih/color"
-	"github.com/nickng/gospal/block"
-	"github.com/nickng/gospal/callctx"
-	"github.com/nickng/gospal/funcs"
-	"github.com/nickng/gospal/loop"
-	"github.com/nickng/migo/v3"
+	"github.com/jujuyuki/gospal/v2/block"
+	"github.com/jujuyuki/gospal/v2/callctx"
+	"github.com/jujuyuki/gospal/v2/funcs"
+	"github.com/jujuyuki/gospal/v2/loop"
+	"github.com/jujuyuki/migo/v3"
 	"golang.org/x/tools/go/ssa"
 )
 

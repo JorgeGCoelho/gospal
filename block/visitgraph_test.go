@@ -6,8 +6,8 @@ import (
 
 	"golang.org/x/tools/go/ssa"
 
-	gssa "github.com/nickng/gospal/ssa"
-	"github.com/nickng/gospal/ssa/build"
+	gssa "github.com/jujuyuki/gospal/v2/ssa"
+	"github.com/jujuyuki/gospal/v2/ssa/build"
 )
 
 func getTestMainFn(t *testing.T) *ssa.Function {
