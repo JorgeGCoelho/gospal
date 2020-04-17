@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/jujuyuki/gospal/v2/ssa"
+	"github.com/jujuyuki/gospal/ssa"
 	"github.com/pkg/errors"
 )
 

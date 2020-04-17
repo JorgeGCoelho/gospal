@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/jujuyuki/gospal/v2/ssa"
+	"github.com/jujuyuki/gospal/ssa"
 	"golang.org/x/tools/go/loader"
 	gossa "golang.org/x/tools/go/ssa"
 	"golang.org/x/tools/go/ssa/ssautil"

@@ -5,7 +5,7 @@ package migoinfer
 import (
 	"log"
 
-	"github.com/jujuyuki/gospal/v2/migoinfer/internal/migoinfer"
+	"github.com/jujuyuki/gospal/migoinfer/internal/migoinfer"
 	"go.uber.org/zap"
 )
 

@@ -6,13 +6,13 @@ import (
 	"go/token"
 	"go/types"
 
-	"github.com/jujuyuki/gospal/v2/callctx"
-	"github.com/jujuyuki/gospal/v2/funcs"
-	"github.com/jujuyuki/gospal/v2/store"
-	"github.com/jujuyuki/gospal/v2/store/chans"
-	"github.com/jujuyuki/gospal/v2/store/mems"
-	"github.com/jujuyuki/gospal/v2/store/structs"
-	"github.com/jujuyuki/migo/v3"
+	"github.com/jujuyuki/gospal/callctx"
+	"github.com/jujuyuki/gospal/funcs"
+	"github.com/jujuyuki/gospal/store"
+	"github.com/jujuyuki/gospal/store/chans"
+	"github.com/jujuyuki/gospal/store/mems"
+	"github.com/jujuyuki/gospal/store/structs"
+	"github.com/jujuyuki/migo"
 	"golang.org/x/tools/go/ssa"
 )
 

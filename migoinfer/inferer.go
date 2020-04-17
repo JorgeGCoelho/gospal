@@ -7,13 +7,13 @@ import (
 	"log"
 	"strings"
 
-	"github.com/jujuyuki/gospal/v2/callctx"
-	"github.com/jujuyuki/gospal/v2/funcs"
-	"github.com/jujuyuki/gospal/v2/migoinfer/internal/migoinfer"
-	"github.com/jujuyuki/gospal/v2/ssa"
-	"github.com/jujuyuki/gospal/v2/store"
-	"github.com/jujuyuki/migo/v3"
-	"github.com/jujuyuki/migo/v3/migoutil"
+	"github.com/jujuyuki/gospal/callctx"
+	"github.com/jujuyuki/gospal/funcs"
+	"github.com/jujuyuki/gospal/migoinfer/internal/migoinfer"
+	"github.com/jujuyuki/gospal/ssa"
+	"github.com/jujuyuki/gospal/store"
+	"github.com/jujuyuki/migo"
+	"github.com/jujuyuki/migo/migoutil"
 )
 
 // Inferer is the main MiGo inference entry point.

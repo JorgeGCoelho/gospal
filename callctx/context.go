@@ -21,9 +21,9 @@ import (
 
 	"golang.org/x/tools/go/ssa"
 
-	"github.com/jujuyuki/gospal/v2/funcs"
-	"github.com/jujuyuki/gospal/v2/store"
-	"github.com/jujuyuki/gospal/v2/store/structs"
+	"github.com/jujuyuki/gospal/funcs"
+	"github.com/jujuyuki/gospal/store"
+	"github.com/jujuyuki/gospal/store/structs"
 )
 
 // A Context is map between local variables and their instances.

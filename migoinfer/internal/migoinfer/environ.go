@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 
-	gssa "github.com/jujuyuki/gospal/v2/ssa"
-	"github.com/jujuyuki/gospal/v2/store"
-	"github.com/jujuyuki/migo/v3"
+	gssa "github.com/jujuyuki/gospal/ssa"
+	"github.com/jujuyuki/gospal/store"
+	"github.com/jujuyuki/migo"
 	"golang.org/x/tools/go/ssa"
 )
 

@@ -4,9 +4,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jujuyuki/gospal/v2/block"
-	"github.com/jujuyuki/gospal/v2/ssa"
-	"github.com/jujuyuki/gospal/v2/ssa/build"
+	"github.com/jujuyuki/gospal/block"
+	"github.com/jujuyuki/gospal/ssa"
+	"github.com/jujuyuki/gospal/ssa/build"
 	gossa "golang.org/x/tools/go/ssa"
 )
 

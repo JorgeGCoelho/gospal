@@ -9,7 +9,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/jujuyuki/gospal/v2/ssa/build"
+	"github.com/jujuyuki/gospal/ssa/build"
 )
 
 const (
