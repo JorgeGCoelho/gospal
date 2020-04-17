@@ -1,22 +1,28 @@
-# gospal [![GoDoc](https://godoc.org/github.com/nickng/gospal?status.svg)](http://godoc.org/github.com/nickng/gospal)
+# gospal 
 
 ## Go Static Program AnaLysing framework
 
-This is a research prototype static analyser for Go programs. Currently the
-framework consists of two main tools, `migoinfer` and `ssaview`, but it
+This is a research prototype static analyser for Go programs. 
+In particular, this ia a fork of [the original prototype](https://github.com/nickng/gospal) 
+that was designed around message-passing. 
+Currently the framework consists of two main tools, `migoinfer` and `ssaview`, but it
 should be able to build more backends with different output formats based on this framework.
 
 To build the tool, use `go get`:
 
 ```
-go get github.com/nickng/gospal/cmd/...
+go get github.com/jujuyuki/gospal/cmd/...
 ```
 
 ### migoinfer
 
-The MiGo infer tool (`cmd/migoinfer`) infers [MiGo
-types](http://github.com/nickng/migo) from a Go source code. The formal
-definitions of the MiGo types are published in [this paper](http://mrg.doc.ic.ac.uk/publications/fencing-off-go-liveness-and-safety-for-channel-based-programming/), and the format of the output in textual form is described in the [migo](https://github.com/nickng/migo/blob/master/README.md) package.
+The MiGo infer tool (`cmd/migoinfer`) infers [extended MiGo
+types](http://github.com/jujuyuki/migo) from a Go source code. The formal
+definitions of the MiGo types were first defined in 
+[this paper](http://mrg.doc.ic.ac.uk/publications/fencing-off-go-liveness-and-safety-for-channel-based-programming/), 
+and extended for shared memory primitives in a paper currently accepted at ECOOP 2020 (to appear). 
+The format of the output in textual form is described in the 
+[migo](https://github.com/jujuyuki/migo/blob/master/README.md) package.
 
 For example, given this sample program `main.go`,
 
@@ -48,7 +54,7 @@ def main.Sender(ch):
     send ch
 ```
 
-This is a research prototype and does not cover all features of Go.
+**This is a research prototype and does not cover all features of Go**.
 Please report errors with a small fragment of sample code and what you
 expect to see, however, noting that it might not be possible to infer the
 types soundly due to the limitations of static analysis.
