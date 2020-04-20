@@ -3,7 +3,7 @@
 ## Go Static Program AnaLysing framework
 
 This is a research prototype static analyser for Go programs. 
-In particular, this ia a fork of [the original prototype](https://github.com/nickng/gospal) 
+In particular, this is a fork of [the original prototype](https://github.com/nickng/gospal) 
 that was designed around message-passing. 
 Currently the framework consists of two main tools, `migoinfer` and `ssaview`, but it
 should be able to build more backends with different output formats based on this framework.
