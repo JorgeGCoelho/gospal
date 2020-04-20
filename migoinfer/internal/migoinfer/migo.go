@@ -12,7 +12,7 @@ import (
 	"github.com/jujuyuki/gospal/store/chans"
 	"github.com/jujuyuki/gospal/store/mems"
 	"github.com/jujuyuki/gospal/store/structs"
-	"github.com/jujuyuki/migo"
+	"github.com/jujuyuki/migo/v3"
 	"golang.org/x/tools/go/ssa"
 )
 

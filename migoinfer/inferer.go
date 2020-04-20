@@ -12,8 +12,8 @@ import (
 	"github.com/jujuyuki/gospal/migoinfer/internal/migoinfer"
 	"github.com/jujuyuki/gospal/ssa"
 	"github.com/jujuyuki/gospal/store"
-	"github.com/jujuyuki/migo"
-	"github.com/jujuyuki/migo/migoutil"
+	"github.com/jujuyuki/migo/v3"
+	"github.com/jujuyuki/migo/v3/migoutil"
 )
 
 // Inferer is the main MiGo inference entry point.

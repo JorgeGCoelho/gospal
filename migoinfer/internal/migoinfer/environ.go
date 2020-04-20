@@ -7,7 +7,7 @@ import (
 
 	gssa "github.com/jujuyuki/gospal/ssa"
 	"github.com/jujuyuki/gospal/store"
-	"github.com/jujuyuki/migo"
+	"github.com/jujuyuki/migo/v3"
 	"golang.org/x/tools/go/ssa"
 )
 

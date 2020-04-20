@@ -2,7 +2,7 @@ package migoinfer
 
 import (
 	"github.com/jujuyuki/gospal/store"
-	"github.com/jujuyuki/migo"
+	"github.com/jujuyuki/migo/v3"
 	"strings"
 )
 

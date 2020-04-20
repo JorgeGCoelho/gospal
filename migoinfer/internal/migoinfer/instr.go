@@ -10,7 +10,7 @@ import (
 	"github.com/jujuyuki/gospal/store/mems"
 	"github.com/jujuyuki/gospal/store/muts"
 	"github.com/jujuyuki/gospal/store/structs"
-	"github.com/jujuyuki/migo"
+	"github.com/jujuyuki/migo/v3"
 	"github.com/pkg/errors"
 	"go/token"
 	"go/types"
