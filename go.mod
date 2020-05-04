@@ -4,9 +4,9 @@ go 1.14
 
 require (
 	github.com/fatih/color v1.7.0
+	github.com/jujuyuki/migo/v3 v3.0.2
 	github.com/mattn/go-colorable v0.0.9 // indirect
 	github.com/mattn/go-isatty v0.0.4 // indirect
-	github.com/jujuyuki/migo/v3 v3.0.1
 	github.com/pkg/errors v0.8.1
 	github.com/stretchr/testify v1.3.0 // indirect
 	go.uber.org/atomic v1.3.2 // indirect
