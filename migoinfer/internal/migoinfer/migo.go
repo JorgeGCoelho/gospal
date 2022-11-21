@@ -158,7 +158,7 @@ func timeChan(ch store.Key) bool {
 }
 
 // migoRecv returns a Receive Statement in MiGo.
-func migoRecv(v *Instruction, local store.Key, ch store.Value) migo.Statement {
+func migoRecv(v *Instruction, local store.Key, ch store.Value, pos token.Pos) migo.Statement {
 	if timeChan(local) {
 		v.Debugf("%s migo recv name=%v (time chan, replace with τ)", v.Module(), local)
 		return &migo.TauStatement{}
@@ -169,7 +169,7 @@ func migoRecv(v *Instruction, local store.Key, ch store.Value) migo.Statement {
 		if c.IsNil() {
 			nc := newFreshNilChan(local.Type())
 			v.MiGo.AddStmts(migoNilChan(v, nc))
-			return &migo.RecvStatement{Chan: nc.Name()}
+			return &migo.RecvStatement{Chan: nc.Name(), Pos: v.Env.Info.FSet.Position(pos)}
 		}
 	}
 	if u, ok := local.(*ssa.UnOp); ok && u.Op == token.MUL { // Deref
@@ -183,23 +183,23 @@ func migoRecv(v *Instruction, local store.Key, ch store.Value) migo.Statement {
 		if _, isField := local.(structs.SField); !isField { // If not defined as a struct-field.
 			v.MiGo.AddStmts(migoNilChan(v, local))
 		}
-		return &migo.RecvStatement{Chan: local.Name()}
+		return &migo.RecvStatement{Chan: local.Name(), Pos: v.Env.Info.FSet.Position(pos)}
 	default:
 		// Channel exists and exported: this is the name we want to receive.
 		v.Debugf("%s Receive %s⇔%s ↦ %s\t%s",
 			v.Module(), local.Name(), exported.Name(), ch.UniqName(), local.Type())
-		return &migo.RecvStatement{Chan: exported.Name()}
+		return &migo.RecvStatement{Chan: exported.Name(), Pos: v.Env.Info.FSet.Position(pos)}
 	}
 }
 
 // migoSend returns a Send Statement in MiGo.
-func migoSend(v *Instruction, local store.Key, ch store.Value) migo.Statement {
+func migoSend(v *Instruction, local store.Key, ch store.Value, pos token.Pos) migo.Statement {
 	v.Debugf("%s migo send name=%v, value=%s", v.Module(), local, ch.UniqName())
 	if c, ok := local.(*ssa.Const); ok {
 		if c.IsNil() {
 			nc := newFreshNilChan(local.Type())
 			v.MiGo.AddStmts(migoNilChan(v, nc))
-			return &migo.SendStatement{Chan: nc.Name()}
+			return &migo.SendStatement{Chan: nc.Name(), Pos: v.Env.Info.FSet.Position(pos)}
 		}
 	}
 	if u, ok := local.(*ssa.UnOp); ok && u.Op == token.MUL { // Deref
@@ -213,12 +213,12 @@ func migoSend(v *Instruction, local store.Key, ch store.Value) migo.Statement {
 		if _, isField := local.(structs.SField); !isField { // If not defined as a struct-field.
 			v.MiGo.AddStmts(migoNilChan(v, local))
 		}
-		return &migo.SendStatement{Chan: local.Name()}
+		return &migo.SendStatement{Chan: local.Name(), Pos: v.Env.Info.FSet.Position(pos)}
 	default:
 		// Channel exists and exported: this is the name we want to send.
 		v.Debugf("%s Send %s⇔%s ↦ %s\t%s",
 			v.Module(), local.Name(), exported.Name(), ch.UniqName(), local.Type())
-		return &migo.SendStatement{Chan: exported.Name()}
+		return &migo.SendStatement{Chan: exported.Name(), Pos: v.Env.Info.FSet.Position(pos)}
 	}
 }
 

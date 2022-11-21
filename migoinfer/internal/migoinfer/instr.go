@@ -393,7 +393,7 @@ func (v *Instruction) VisitSelect(instr *ssa.Select) {
 }
 
 func (v *Instruction) VisitSend(instr *ssa.Send) {
-	v.MiGo.AddStmts(migoSend(v, instr.Chan, v.Get(instr.Chan)))
+	v.MiGo.AddStmts(migoSend(v, instr.Chan, v.Get(instr.Chan), instr.Pos()))
 }
 
 func (v *Instruction) VisitSlice(instr *ssa.Slice) {
@@ -429,10 +429,10 @@ func (v *Instruction) VisitTypeAssert(instr *ssa.TypeAssert) {
 func (v *Instruction) VisitUnOp(instr *ssa.UnOp) {
 	switch instr.Op {
 	case token.ARROW:
-		v.MiGo.AddStmts(migoRecv(v, instr.X, v.Get(instr.X)))
+		v.MiGo.AddStmts(migoRecv(v, instr.X, v.Get(instr.X), instr.Pos()))
 	case token.MUL:
 		if isPtrBasic(instr.X) {
-			if strings.Contains(v.Get(instr.X).UniqName(),"mem") {
+			if strings.Contains(v.Get(instr.X).UniqName(), "mem") {
 				v.MiGo.AddStmts(migoRead(v, instr.X))
 			}
 		} else {
@@ -748,12 +748,13 @@ func (v *Instruction) getSelectCases(sel *ssa.Select) migo.Statement {
 
 // selBodyGuard returns the guard action of a select case (except for default).
 func (v *Instruction) selBodyGuard(sel *ssa.Select, caseIdx int) migo.Statement {
+	selCase := sel.States[caseIdx]
 	// Select guard actions then jump to body blocks
-	switch sel.States[caseIdx].Dir {
+	switch selCase.Dir {
 	case types.SendOnly:
-		return migoSend(v, sel.States[caseIdx].Chan, v.Get(sel.States[caseIdx].Chan))
+		return migoSend(v, selCase.Chan, v.Get(selCase.Chan), selCase.Pos)
 	case types.RecvOnly:
-		return migoRecv(v, sel.States[caseIdx].Chan, v.Get(sel.States[caseIdx].Chan))
+		return migoRecv(v, selCase.Chan, v.Get(selCase.Chan), selCase.Pos)
 	default:
 		v.Fatalf("%s Select case is guarded by neither send nor receive.\n\t%s",
 			v.Module(), v.Env.getPos(sel))

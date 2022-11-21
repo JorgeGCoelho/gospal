@@ -15,3 +15,5 @@ require (
 	golang.org/x/sys v0.0.0-20190109145017-48ac38b7c8cb // indirect
 	golang.org/x/tools v0.0.0-20190110163146-51295c7ec13a
 )
+
+replace github.com/jujuyuki/migo/v3 => ../gospal-migo/
