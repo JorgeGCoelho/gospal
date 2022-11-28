@@ -27,7 +27,7 @@ func TestBuild(t *testing.T) {
 	if info.Prog == nil {
 		t.Errorf("SSA Program missing")
 	}
-	mains, err := ssa.MainPkgs(info.Prog, false)
+	mains, err := ssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("cannot find main packages: %v", err)
 	}
@@ -48,7 +48,7 @@ func TestBuildNonMainPkg(t *testing.T) {
 
 	conf := build.FromReader(strings.NewReader(s))
 	info, err := conf.Build()
-	if _, err = ssa.MainPkgs(info.Prog, false); err != ssa.ErrNoMainPkgs {
+	if _, err = ssa.MainPkgs(info.Prog); err != ssa.ErrNoMainPkgs {
 		t.Errorf("unexpected main package")
 	}
 }
@@ -75,7 +75,7 @@ func TestCallGraph(t *testing.T) {
 	if info.Prog == nil {
 		t.Errorf("SSA Program missing")
 	}
-	mains, err := ssa.MainPkgs(info.Prog, false)
+	mains, err := ssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("cannot find main packages: %v", err)
 	}
@@ -123,7 +123,7 @@ func TestCallGraphAllFunc(t *testing.T) {
 	if info.Prog == nil {
 		t.Errorf("SSA Program missing")
 	}
-	mains, err := ssa.MainPkgs(info.Prog, false)
+	mains, err := ssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("cannot find main packages: %v", err)
 	}

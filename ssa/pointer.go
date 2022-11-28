@@ -4,7 +4,7 @@ import "golang.org/x/tools/go/pointer"
 
 // PtrAnlysCfg returns a default pointer analysis config from Info.
 func (info *Info) PtrAnlysCfg(tests bool) (*pointer.Config, error) {
-	mains, err := MainPkgs(info.Prog, tests)
+	mains, err := MainPkgs(info.Prog)
 	if err != nil {
 		return nil, err
 	}

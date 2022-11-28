@@ -35,7 +35,7 @@ func TestBuildFromFiles(t *testing.T) {
 	if err != nil {
 		t.Errorf("SSA build failed: %v", err)
 	}
-	mains, err := ssa.MainPkgs(info.Prog, false)
+	mains, err := ssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("cannot find main package: %v", err)
 	}
@@ -59,7 +59,7 @@ func TestBuildFromReader(t *testing.T) {
 	if err != nil {
 		t.Errorf("SSA build failed: %v", err)
 	}
-	mains, err := ssa.MainPkgs(info.Prog, false)
+	mains, err := ssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("cannot find main package: %v", err)
 	}

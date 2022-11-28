@@ -42,7 +42,7 @@ func TestSimpleLoop(t *testing.T) {
 	if err != nil {
 		t.Error("cannot build SSA:", err)
 	}
-	mains, err := ssa.MainPkgs(info.Prog, false)
+	mains, err := ssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Error("Cannot find main package:", err)
 	}
@@ -73,7 +73,7 @@ func TestNestedLoop(t *testing.T) {
 	if err != nil {
 		t.Error("cannot build SSA:", err)
 	}
-	mains, err := ssa.MainPkgs(info.Prog, false)
+	mains, err := ssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Error("Cannot find main package:", err)
 	}
@@ -105,7 +105,7 @@ func TestShortCircuitedLoop(t *testing.T) {
 	if err != nil {
 		t.Error("cannot build SSA:", err)
 	}
-	mains, err := ssa.MainPkgs(info.Prog, false)
+	mains, err := ssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Error("Cannot find main package:", err)
 	}
@@ -129,7 +129,7 @@ func TestNotLoop(t *testing.T) {
 	if err != nil {
 		t.Error("cannot build SSA:", err)
 	}
-	mains, err := ssa.MainPkgs(info.Prog, false)
+	mains, err := ssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Error("Cannot find main package:", err)
 	}

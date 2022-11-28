@@ -66,7 +66,7 @@ func (g *CallGraph) UsedFunctions() ([]*ssa.Function, error) {
 		return nil, errors.Wrap(err, "callgraph: failed to visit edges")
 	}
 
-	mains, err := MainPkgs(g.prog, false)
+	mains, err := MainPkgs(g.prog)
 	if err != nil {
 		return nil, errors.Wrap(err, "callgraph: failed to find main packages (Check if this this a command?)")
 	}
@@ -193,7 +193,7 @@ func (info *Info) BuildCallGraph(algo string, tests bool) (*CallGraph, error) {
 		cg = ptares.CallGraph
 
 	case "rta":
-		mains, err := MainPkgs(info.Prog, tests)
+		mains, err := MainPkgs(info.Prog)
 		if err != nil {
 			return nil, err
 		}

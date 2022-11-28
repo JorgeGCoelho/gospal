@@ -13,7 +13,7 @@ func TestLookupInterface(t *testing.T) {
 	if err != nil {
 		t.Errorf("SSA build failed: %v", err)
 	}
-	mains, err := gssa.MainPkgs(info.Prog, false)
+	mains, err := gssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("no main package: %v", err)
 	}
@@ -42,7 +42,7 @@ func TestLookupInterface2(t *testing.T) {
 	if err != nil {
 		t.Errorf("SSA build failed: %v", err)
 	}
-	mains, err := gssa.MainPkgs(info.Prog, false)
+	mains, err := gssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("no main package: %v", err)
 	}
@@ -74,7 +74,7 @@ func TestLookupAssert(t *testing.T) {
 	if err != nil {
 		t.Errorf("SSA build failed: %v", err)
 	}
-	mains, err := gssa.MainPkgs(info.Prog, false)
+	mains, err := gssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("no main package: %v", err)
 	}
@@ -99,7 +99,7 @@ func TestReturnValue(t *testing.T) {
 	if err != nil {
 		t.Errorf("SSA build failed: %v", err)
 	}
-	mains, err := gssa.MainPkgs(info.Prog, false)
+	mains, err := gssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("no main package: %v", err)
 	}
@@ -124,7 +124,7 @@ func TestChainedCall(t *testing.T) {
 	if err != nil {
 		t.Errorf("SSA build failed: %v", err)
 	}
-	mains, err := gssa.MainPkgs(info.Prog, false)
+	mains, err := gssa.MainPkgs(info.Prog)
 	if err != nil {
 		t.Errorf("no main package: %v", err)
 	}

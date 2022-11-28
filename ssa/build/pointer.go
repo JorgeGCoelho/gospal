@@ -32,13 +32,6 @@ func setupPTA(prog *ssa.Program, lprog *loader.Program, ptaLog io.Writer) (*poin
 			testPkgs = append(testPkgs, initialPkg)
 		}
 	}
-	if testPkgs != nil {
-		for _, testPkg := range testPkgs {
-			if p := prog.CreateTestMainPackage(testPkg); p != nil {
-				mains = append(mains, p)
-			}
-		}
-	}
 	if mains == nil {
 		return nil, fmt.Errorf("analysis scope has no main and no tests")
 	}

@@ -26,7 +26,7 @@ func getTestMainFn(t *testing.T) *ssa.Function {
 	if err != nil {
 		t.Errorf("SSA build failed: %v", err)
 	}
-	mains, _ := gssa.MainPkgs(info.Prog, false)
+	mains, _ := gssa.MainPkgs(info.Prog)
 	return mains[0].Func("main")
 }
 

@@ -65,7 +65,7 @@ func (i *Inferer) Analyse() {
 	}
 	if i.EntryFunc == "" { // main.main
 		// Find main packages to start analysis.
-		mains, err := ssa.MainPkgs(i.Info.Prog, false)
+		mains, err := ssa.MainPkgs(i.Info.Prog)
 		if err != nil {
 			log.Fatal("Cannot find main package:", err)
 		}
