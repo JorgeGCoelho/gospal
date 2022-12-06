@@ -8,8 +8,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/jujuyuki/gospal/migoinfer"
-	"github.com/jujuyuki/gospal/ssa/build"
+	"github.com/JorgeGCoelho/gospal/v2/migoinfer"
+	"github.com/JorgeGCoelho/gospal/v2/ssa/build"
 )
 
 const (

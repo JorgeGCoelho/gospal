@@ -1,3 +1,4 @@
+//go:build debug
 // +build debug
 
 package migoinfer
@@ -5,7 +6,7 @@ package migoinfer
 import (
 	"log"
 
-	"github.com/jujuyuki/gospal/migoinfer/internal/migoinfer"
+	"github.com/JorgeGCoelho/gospal/v2/migoinfer/internal/migoinfer"
 	"go.uber.org/zap"
 )
 

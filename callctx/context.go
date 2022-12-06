@@ -10,7 +10,6 @@
 //
 // This package is inspired by the builtin context package but for
 // context-sensitive variable propagation.
-//
 package callctx
 
 import (
@@ -21,14 +20,13 @@ import (
 
 	"golang.org/x/tools/go/ssa"
 
-	"github.com/jujuyuki/gospal/funcs"
-	"github.com/jujuyuki/gospal/store"
-	"github.com/jujuyuki/gospal/store/structs"
+	"github.com/JorgeGCoelho/gospal/v2/funcs"
+	"github.com/JorgeGCoelho/gospal/v2/store"
+	"github.com/JorgeGCoelho/gospal/v2/store/structs"
 )
 
 // A Context is map between local variables and their instances.
 // Get and Put are the main functions to access the contents of the map.
-//
 type Context interface {
 	Get(store.Key) store.Value
 	Put(store.Key, store.Value)
@@ -55,7 +53,6 @@ func Toplevel() Context {
 
 // Updater is an interface for a context that has the ability to modify the
 // underlying storage which the instances point to.
-//
 type Updater interface {
 	PutObj(k store.Key, v ssa.Value)                 // Add Value.
 	PutUniq(k store.Key, v store.ValueWrapper) error // Add pre-initialised Value.

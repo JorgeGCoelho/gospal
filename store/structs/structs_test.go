@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/tools/go/ssa"
 
-	"github.com/jujuyuki/gospal/ssa/build"
+	"github.com/JorgeGCoelho/gospal/v2/ssa/build"
 )
 
 var T = `package main

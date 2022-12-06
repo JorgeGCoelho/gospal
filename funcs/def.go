@@ -7,7 +7,7 @@ import (
 	"go/types"
 	"log"
 
-	"github.com/jujuyuki/gospal/store"
+	"github.com/JorgeGCoelho/gospal/v2/store"
 
 	"golang.org/x/tools/go/ssa"
 )
@@ -21,15 +21,14 @@ type returnCounts []returnCount
 // Definition is a uniform representation for a function for abstracting
 // function-like constructs in Go, namely:
 //
-//  - Builtin function
-//  - Ordinary function
-//  - Pointer to function (function in a variable)
-//  - Closures (functions that carries variable with it)
+//   - Builtin function
+//   - Ordinary function
+//   - Pointer to function (function in a variable)
+//   - Closures (functions that carries variable with it)
 //
 // In this form, a function definition consolidates all parameters to a function
 // including captured free variables (closure), and return values to parameters.
 // Structures are flattened so that all fields are represented separately.
-//
 type Definition struct {
 	Function   *ssa.Function // Function parameters, returns, signature and body.
 	Parameters []store.Key   // Aggregated parameters.

@@ -1,8 +1,8 @@
 package fn
 
 import (
-	gssa "github.com/jujuyuki/gospal/ssa"
-	"github.com/jujuyuki/gospal/ssa/build"
+	gssa "github.com/JorgeGCoelho/gospal/v2/ssa"
+	"github.com/JorgeGCoelho/gospal/v2/ssa/build"
 	"golang.org/x/tools/go/ssa"
 	"testing"
 )

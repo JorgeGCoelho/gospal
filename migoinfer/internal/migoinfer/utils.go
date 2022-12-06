@@ -5,7 +5,7 @@ package migoinfer
 import (
 	"go/types"
 
-	"github.com/jujuyuki/gospal/store"
+	"github.com/JorgeGCoelho/gospal/v2/store"
 )
 
 func isChan(k store.Key) bool {

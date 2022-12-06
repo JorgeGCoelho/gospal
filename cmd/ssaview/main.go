@@ -1,5 +1,4 @@
 // Command ssaview is a SSA printer using standard static analysis options.
-//
 package main
 
 import (
@@ -9,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/jujuyuki/gospal/ssa/build"
+	"github.com/JorgeGCoelho/gospal/v2/ssa/build"
 )
 
 const (

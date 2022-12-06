@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"go/token"
 
+	"github.com/JorgeGCoelho/gospal/v2/block"
+	"github.com/JorgeGCoelho/gospal/v2/callctx"
+	"github.com/JorgeGCoelho/gospal/v2/funcs"
+	"github.com/JorgeGCoelho/gospal/v2/loop"
+	"github.com/JorgeGCoelho/migo/v3"
 	"github.com/fatih/color"
-	"github.com/jujuyuki/gospal/block"
-	"github.com/jujuyuki/gospal/callctx"
-	"github.com/jujuyuki/gospal/funcs"
-	"github.com/jujuyuki/gospal/loop"
-	"github.com/jujuyuki/migo/v3"
 	"golang.org/x/tools/go/ssa"
 )
 
@@ -223,17 +223,22 @@ func isSelCondBlk(cond ssa.Value) bool {
 // mergePhi deals with variables in the context and exported names for φ.
 //
 // Given a φ-node, e.g.
-//   t6 = φ[0: t1, 1: t2]
+//
+//	t6 = φ[0: t1, 1: t2]
+//
 // t6 is removed from the function parameter and call argument.
 // Variable from the incoming edge, e.g. 0 → t1 is located from the args then
 // its corresponding parameter at callee is replaced by t6.
 // The original context, e.g.
-//   [ t1 → a, ... ]
+//
+//	[ t1 → a, ... ]
+//
 // Is then converted to use the φ name, i.e. t6
-//  [ t6 → a, t1 → a...]
+//
+//	[ t6 → a, t1 → a...]
+//
 // The original name is unexported (callee no longer have access),
 // but the new φ name is exported (callee will call old name with new name).
-//
 func (b *Block) mergePhi(data *BlockData, instr *ssa.Phi) {
 	migoFn := data.migoFunc
 	removed := 0

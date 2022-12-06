@@ -7,7 +7,7 @@ import (
 	"go/types"
 	"log"
 
-	"github.com/jujuyuki/gospal/store"
+	"github.com/JorgeGCoelho/gospal/v2/store"
 	"golang.org/x/tools/go/ssa"
 )
 
@@ -164,17 +164,17 @@ func (s *Struct) UniqName() string {
 //
 // Example:
 //
-//  struct {         // t0 = Alloc(...)
-//  	X int        // t1 = Field(t0, 1)
-//  	Y struct {   // t2 = Field(t0, 2)
-//  		Z byte   // ; unused
-//  		A string // t3 = Field(t2, 2)
-//  	}
-//  }
+//	struct {         // t0 = Alloc(...)
+//		X int        // t1 = Field(t0, 1)
+//		Y struct {   // t2 = Field(t0, 2)
+//			Z byte   // ; unused
+//			A string // t3 = Field(t2, 2)
+//		}
+//	}
 //
 // if x is ssa.Value t0, Struct(t0).Expand() would become
 //
-//   []store.Key{t0, t1 /*t0_0*/, t2 /*t0_1*/, SField(nil) /*t2_0*/, t3 /*t2_2*/}
+//	[]store.Key{t0, t1 /*t0_0*/, t2 /*t0_1*/, SField(nil) /*t2_0*/, t3 /*t2_2*/}
 //
 // Fields are always wrapped with SField.
 func (s *Struct) Expand() []store.Key {

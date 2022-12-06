@@ -2,18 +2,18 @@ package migoinfer
 
 import (
 	"fmt"
+	"github.com/JorgeGCoelho/migo/v3"
 	"io"
 	"io/ioutil"
 	"log"
 	"strings"
 
-	"github.com/jujuyuki/gospal/callctx"
-	"github.com/jujuyuki/gospal/funcs"
-	"github.com/jujuyuki/gospal/migoinfer/internal/migoinfer"
-	"github.com/jujuyuki/gospal/ssa"
-	"github.com/jujuyuki/gospal/store"
-	"github.com/jujuyuki/migo/v3"
-	"github.com/jujuyuki/migo/v3/migoutil"
+	"github.com/JorgeGCoelho/gospal/v2/callctx"
+	"github.com/JorgeGCoelho/gospal/v2/funcs"
+	"github.com/JorgeGCoelho/gospal/v2/migoinfer/internal/migoinfer"
+	"github.com/JorgeGCoelho/gospal/v2/ssa"
+	"github.com/JorgeGCoelho/gospal/v2/store"
+	"github.com/JorgeGCoelho/migo/v3/migoutil"
 )
 
 // Inferer is the main MiGo inference entry point.

@@ -1,11 +1,11 @@
 package migoinfer
 
 import (
+	"github.com/JorgeGCoelho/gospal/v2/block"
+	"github.com/JorgeGCoelho/gospal/v2/callctx"
+	"github.com/JorgeGCoelho/gospal/v2/funcs"
+	"github.com/JorgeGCoelho/gospal/v2/store/structs"
 	"github.com/fatih/color"
-	"github.com/jujuyuki/gospal/block"
-	"github.com/jujuyuki/gospal/callctx"
-	"github.com/jujuyuki/gospal/funcs"
-	"github.com/jujuyuki/gospal/store/structs"
 	"github.com/pkg/errors"
 	"golang.org/x/tools/go/ssa"
 )
@@ -29,6 +29,7 @@ type Function struct {
 //   - Function definition: call
 //   - Caller context: ctx
 //   - Program environment: env
+//
 // They contain the global, and caller local variables respectively.
 // In particular, the caller context contains the caller *ssa.Function and
 // its corresponding call function.

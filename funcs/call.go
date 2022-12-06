@@ -7,7 +7,7 @@ import (
 	"go/types"
 	"log"
 
-	"github.com/jujuyuki/gospal/store"
+	"github.com/JorgeGCoelho/gospal/v2/store"
 	"golang.org/x/tools/go/ssa"
 )
 

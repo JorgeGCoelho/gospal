@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jujuyuki/gospal/ssa"
-	"github.com/jujuyuki/gospal/ssa/build"
+	"github.com/JorgeGCoelho/gospal/v2/ssa"
+	"github.com/JorgeGCoelho/gospal/v2/ssa/build"
 	gossa "golang.org/x/tools/go/ssa"
 )
 

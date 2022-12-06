@@ -1,13 +1,13 @@
 package migoinfer
 
 import (
+	"github.com/JorgeGCoelho/migo/v3"
 	"go/token"
 	"log"
 	"os"
 
-	gssa "github.com/jujuyuki/gospal/ssa"
-	"github.com/jujuyuki/gospal/store"
-	"github.com/jujuyuki/migo/v3"
+	gssa "github.com/JorgeGCoelho/gospal/v2/ssa"
+	"github.com/JorgeGCoelho/gospal/v2/store"
 	"golang.org/x/tools/go/ssa"
 )
 
