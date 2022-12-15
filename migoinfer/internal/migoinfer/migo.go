@@ -12,6 +12,7 @@ import (
 	"github.com/JorgeGCoelho/migo/v3"
 	"go/token"
 	"go/types"
+	"golang.org/x/tools/go/pointer"
 	"golang.org/x/tools/go/ssa"
 )
 
@@ -157,7 +158,34 @@ func timeChan(ch store.Key) bool {
 }
 
 // migoRecv returns a Receive Statement in MiGo.
-func migoRecv(v *Instruction, local store.Key, ch store.Value, pos token.Pos) migo.Statement {
+func migoRecv(v *Instruction, local store.Key, ch store.Value, pos token.Pos, instr *ssa.UnOp) migo.Statement {
+	// Find dependencies between receive and send operations
+	pointerConf := &pointer.Config{Mains: v.Env.Info.Prog.AllPackages()}
+
+	sendPos := make(map[token.Pos]struct{})
+	if instr != nil {
+		value := ssa.Value(instr)
+		seen := make(map[*ssa.Value]struct{})
+		followReferrers(&sendPos, &value, &value, seen, pointerConf)
+
+		res, err := pointer.Analyze(pointerConf)
+		if err == nil {
+			for _, value := range res.Queries {
+				p := value.PointsTo()
+				labels := p.Labels()
+				for _, label := range labels {
+					value := label.Value()
+					followReferrers(&sendPos, &value, &value, seen, pointerConf)
+				}
+			}
+		}
+	}
+
+	sendPositions := make([]token.Position, 0, len(sendPos))
+	for pos, _ := range sendPos {
+		sendPositions = append(sendPositions, v.Env.Info.FSet.Position(pos))
+	}
+
 	if timeChan(local) {
 		v.Debugf("%s migo recv name=%v (time chan, replace with τ)", v.Module(), local)
 		return &migo.TauStatement{}
@@ -168,7 +196,7 @@ func migoRecv(v *Instruction, local store.Key, ch store.Value, pos token.Pos) mi
 		if c.IsNil() {
 			nc := newFreshNilChan(local.Type())
 			v.MiGo.AddStmts(migoNilChan(v, nc))
-			return &migo.RecvStatement{Chan: nc.Name(), Pos: v.Env.Info.FSet.Position(pos)}
+			return &migo.RecvStatement{Chan: nc.Name(), Pos: v.Env.Info.FSet.Position(pos), Sends: sendPositions}
 		}
 	}
 	if u, ok := local.(*ssa.UnOp); ok && u.Op == token.MUL { // Deref
@@ -182,12 +210,12 @@ func migoRecv(v *Instruction, local store.Key, ch store.Value, pos token.Pos) mi
 		if _, isField := local.(structs.SField); !isField { // If not defined as a struct-field.
 			v.MiGo.AddStmts(migoNilChan(v, local))
 		}
-		return &migo.RecvStatement{Chan: local.Name(), Pos: v.Env.Info.FSet.Position(pos)}
+		return &migo.RecvStatement{Chan: local.Name(), Pos: v.Env.Info.FSet.Position(pos), Sends: sendPositions}
 	default:
 		// Channel exists and exported: this is the name we want to receive.
 		v.Debugf("%s Receive %s⇔%s ↦ %s\t%s",
 			v.Module(), local.Name(), exported.Name(), ch.UniqName(), local.Type())
-		return &migo.RecvStatement{Chan: exported.Name(), Pos: v.Env.Info.FSet.Position(pos)}
+		return &migo.RecvStatement{Chan: exported.Name(), Pos: v.Env.Info.FSet.Position(pos), Sends: sendPositions}
 	}
 }
 

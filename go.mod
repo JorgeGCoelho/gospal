@@ -18,5 +18,3 @@ require (
 	golang.org/x/mod v0.7.0 // indirect
 	golang.org/x/sys v0.3.0 // indirect
 )
-
-replace github.com/jujuyuki/migo/v3 => ../gospal-migo/

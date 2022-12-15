@@ -429,7 +429,7 @@ func (v *Instruction) VisitTypeAssert(instr *ssa.TypeAssert) {
 func (v *Instruction) VisitUnOp(instr *ssa.UnOp) {
 	switch instr.Op {
 	case token.ARROW:
-		v.MiGo.AddStmts(migoRecv(v, instr.X, v.Get(instr.X), instr.Pos()))
+		v.MiGo.AddStmts(migoRecv(v, instr.X, v.Get(instr.X), instr.Pos(), instr))
 	case token.MUL:
 		if isPtrBasic(instr.X) {
 			if strings.Contains(v.Get(instr.X).UniqName(), "mem") {
@@ -754,7 +754,7 @@ func (v *Instruction) selBodyGuard(sel *ssa.Select, caseIdx int) migo.Statement 
 	case types.SendOnly:
 		return migoSend(v, selCase.Chan, v.Get(selCase.Chan), selCase.Pos)
 	case types.RecvOnly:
-		return migoRecv(v, selCase.Chan, v.Get(selCase.Chan), selCase.Pos)
+		return migoRecv(v, selCase.Chan, v.Get(selCase.Chan), selCase.Pos, nil)
 	default:
 		v.Fatalf("%s Select case is guarded by neither send nor receive.\n\t%s",
 			v.Module(), v.Env.getPos(sel))

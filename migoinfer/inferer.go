@@ -105,15 +105,22 @@ func (i *Inferer) Analyse() {
 		// Print main.main first.
 		for _, f := range i.Env.Prog.Funcs {
 			if f.SimpleName() == "main.main" {
-				fmt.Fprintf(i.outWriter, f.String())
+				fmt.Fprint(i.outWriter, f.String())
 			}
 		}
+		lastFuncName := ""
 		for _, f := range i.Env.Prog.Funcs {
 			if f.SimpleName() != "main.main" && !strings.HasPrefix(f.SimpleName(), "os") &&
 				!strings.HasPrefix(f.SimpleName(), "syscall") &&
 				!strings.HasPrefix(f.SimpleName(), "internal_poll") &&
 				!strings.HasPrefix(f.SimpleName(), "sync.o") {
-				fmt.Fprintf(i.outWriter, f.String())
+				trimmed := strings.Split(f.SimpleName(), "$")[0]
+				if lastFuncName != "" && trimmed != lastFuncName {
+					fmt.Fprint(i.outWriter, "\n")
+
+				}
+				fmt.Fprint(i.outWriter, f.String())
+				lastFuncName = trimmed
 			}
 		}
 	}
